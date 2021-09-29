@@ -1,0 +1,40 @@
+body {
+  padding: 50px;
+}
+
+.content {
+  margin: 10px 0;
+}
+
+/* 未勾選的樣式 */
+.title {
+  background-color: #00b7ff;
+  padding: 10px 10px;
+  font-size: 18px;
+}
+
+/* 以勾選之標題樣式 */
+.title2 {
+  background-color: #00b7ff;
+  text-decoration: line-through;
+  padding: 10px 10px;
+  font-size: 18px;
+}
+
+/* 未勾選之內容樣式 */
+.message {
+  background-color: #dcf4fd;
+  padding: 10px 10px;
+}
+
+/* 已勾選之內容樣式 */
+.message2 {
+  background-color: #dcf4fd;
+  text-decoration: line-through;
+  padding: 10px 10px;
+}
+
+.i_btn {
+  float: right;
+  margin: 1px;
+}
