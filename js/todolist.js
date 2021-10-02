@@ -55,17 +55,21 @@ function editList(id) {
   $("#edit" + id).css("display", "none");
   $("#update" + id).css("display", "inline");
 
+  // 建立一個<input>元素為修改標題用
   var input = document.createElement("input");
   input.type = "text";
   input.id = "edit_title" + id;
   input.value = $("#title" + id).text();
   input.size = Math.max((20 / 4) * 3, 4);
 
+  // 隱藏原本之標題
   $("#title" + id).css("display", "none");
+  // 在標題之父層插入新建立之輸入框
   $("#title" + id)
     .parent()
     .append(input);
 
+  // 建立一個<input>元素為修改內容用
   var message_input = document.createElement("input");
   message_input.type = "text";
   message_input.id = "edit_message" + id;
@@ -100,4 +104,28 @@ function removeList(id) {
   var index = todolist.findIndex((element) => element._id === id);
   todolist.splice(index, 1);
   $("#" + id).remove();
+}
+
+function changeStatus(id, btnstatus) {
+  var title = btnstatus.parentNode;
+  var message = title.nextElementSibling;
+  if (btnstatus.checked) {
+    title.className = "title2";
+    message.className = "message2";
+    $("#edit" + id).css("display", "none");
+    $("#update" + id).css("display", "none");
+
+    // 判斷是否為修改中狀態，則是要重新轉換為文字模式並把輸入框移除
+    if (document.getElementById("edit_title" + id)) {
+      $("#title" + id).css("display", "inline");
+      $("#message" + id).css("display", "inline");
+      $("#edit_title" + id).remove();
+      $("#edit_message" + id).remove();
+    }
+  } else {
+    // checkbox為勾選，回到未勾選狀態，同時須顯示更改標題及內容
+    title.className = "title";
+    message.className = "message";
+    $("#edit" + id).css("display", "inline");
+  }
 }
