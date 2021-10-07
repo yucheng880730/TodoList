@@ -1,23 +1,36 @@
 var express = require("express");
 var router = express.Router();
-var listModel = [];
-var id = 1;
+
+// 原本接收前端資料暫存在後端的一個變數中
+// 修改為透過後端儲存至MongoDB
+
+// 引入models/listModel.js作為資料庫模組，並存在變數listModel中
+var listModel = require("../models/listModel.js");
 
 router.post("/addList", function (req, res) {
-  var newlist = {
-    _id: id,
+  var newlist = new listModel({
     title: req.body.title,
     content: req.body.content,
     status: false,
-  };
-
-  listModel.push(newlist);
-  id++;
-  res.json({ status: 0, msg: "success", data: newlist });
+  });
+  newlist.save(function (err, data) {
+    if (err) {
+      res.json({ status: 1, msg: "error" });
+      console.log("add error");
+    } else {
+      res.json({ status: 0, msg: "success", data: data });
+      console.log("add success");
+    }
+  });
 });
 
 router.get("/getList", function (req, res) {
-  res.json(listModel);
+  listModel.find(function (err, data) {
+    if (err) {
+      console.log(err);
+    }
+    res.json(data);
+  });
 });
 
 // 建立修改代辦清單API的路由及方法

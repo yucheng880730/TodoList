@@ -160,7 +160,7 @@ function addList() {
 }
 
 // 呼叫getList()方法，做為執行時初始化代辦清
-getList();
+// getList();
 function getList() {
   $.get("http://localhost:3000/api/getList", function (data, status) {
     for (var i = 0; i < data.length; i++) {
