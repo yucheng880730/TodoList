@@ -12,5 +12,3 @@ listSchema.set("collection", "list");
 
 // 用model()方法建立名稱為list的模組(model)
 var model = mongoose.model("list", listSchema);
-
-var content = new model({ title: "111", content: "111", status: false });

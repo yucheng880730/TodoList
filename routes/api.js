@@ -35,31 +35,61 @@ router.get("/getList", function (req, res) {
 
 // 建立修改代辦清單API的路由及方法
 router.post("/updateList", function (req, res) {
+  // 前端傳來代辦項目id
   var id = req.body.id;
-  var index = listModel.findIndex((item) => item._id == id);
-  listModel[index].title = req.body.title;
-  listModel[index].content = req.body.content;
-  res.json({ status: 0, msg: "success" });
+  listModel.findById(id, function (err, data) {
+    if (err) {
+      console.log(err);
+      res.json({ status: 1, msg: "error" });
+    } else {
+      data.title = req.body.title;
+      data.content = req.body.content;
+      data.save(function (err) {
+        if (err) {
+          console.log(err);
+          res.json({ status: 1, msg: "error" });
+        } else {
+          res.json({ status: 0, msg: "success" });
+        }
+      });
+    }
+  });
 });
 
 router.post("/removeList", function (req, res) {
   var id = req.body.id;
-  var index = listModel.findIndex((item) => item._id == id);
-  // 從index位置刪除1個元素
-  listModel.splice(index, 1);
-  res.json({ status: 0, msg: "success" });
+  listModel.remove({ _id: id }, function (err, data) {
+    if (err) {
+      console.log(err);
+      res.json({ status: 1, msg: "error" });
+    } else {
+      res.json({ status: 0, msg: "success" });
+    }
+  });
 });
 
 router.post("/changeStatus", function (req, res) {
   var id = req.body.id;
-  var index = listModel.findIndex((item) => item._id == id);
-
-  if (listModel[index]["status"]) {
-    listModel[index]["status"] = false;
-  } else {
-    listModel[index]["status"] = true;
-  }
-  res.json({ status: 0, msg: "success" });
+  listModel.findById(id, function (err, data) {
+    if (err) {
+      console.log(err);
+      res.json({ status: 1, msg: "error" });
+    } else {
+      if (data.status) {
+        data.status = false;
+      } else {
+        data.status = true;
+      }
+      data.save(function (err) {
+        if (err) {
+          console.log(err);
+          res.json({ status: 1, msg: "error" });
+        } else {
+          res.json({ status: 0, msg: "success" });
+        }
+      });
+    }
+  });
 });
 
 module.exports = router;
