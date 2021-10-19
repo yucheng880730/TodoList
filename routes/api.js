@@ -6,8 +6,10 @@ var router = express.Router();
 
 // 引入models/listModel.js作為資料庫模組，並存在變數listModel中
 var listModel = require("../models/listModel.js");
+// console.log(listModel);
 
 router.post("/addList", function (req, res) {
+  // return "test";
   var newlist = new listModel({
     title: req.body.title,
     content: req.body.content,

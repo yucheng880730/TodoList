@@ -23,7 +23,11 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
+
+// 設定api路由
 app.use("/api", api);
+
+// 利用express中內建中介軟體函數express.static將指定目錄對外開放
 app.use("/public", express.static("public"));
 
 // catch 404 and forward to error handler
